@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.12'  # Updated to match your Azure Portal setting
 
       - name: Install dependencies
         run: |
@@ -34,7 +34,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-
+    
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -44,6 +44,7 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: learing-cicd-testing
+          app-name: 'learing-cicd-testing'
+          slot-name: 'production'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .
